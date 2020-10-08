@@ -1,0 +1,12 @@
+#! /usr/bin/bash
+
+PACKAGENAME="pachelpr"
+
+if [ "$1" == "--help" ] || [ "$1" == "-h" ]; then
+	printf "\nUsage:\n pachelpr [OPTIONS] [PACKAGE NAME]\n\n-i --install - Installs a program from the official repos\n-r --remove - Removes a program and its dependencies\n-a --aur - Downloads and Installs something from the AU\n"
+fi
+
+if [ "$#" == 1 ] && [ "$1" == "--install" ] || [ "$1" == "-i" ] || [ "$1" == "-r" ] || [ "$1" == "--remove" ] || [ "$1" == "-a" ] || [ "$1" == "--aur" ]; then
+	printf "Package name not supplied. Please try again."
+fi
+
