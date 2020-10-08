@@ -19,5 +19,8 @@ exit 0
 
 [[ $1 == "--help" ]] && usage
 
-[[ "$1" == "--install" ]] && sudo pacman -S "$PACKAGENAME"
+[[ $1 == "--install" ]] && sudo pacman -S "$PACKAGENAME"
+[[ $1 == "-i" ]] && sudo pacman -S "$PACKAGENAME"
+[[ $1 == "--remove" ]] && sudo pacman -Rns "$PACKAGENAME"
+[[ $1 == "-r" ]] && sudo pacman -Rns "$PACKAGENAME"
 
