@@ -23,4 +23,15 @@ exit 0
 [[ $1 == "-i" ]] && sudo pacman -S "$PACKAGENAME"
 [[ $1 == "--remove" ]] && sudo pacman -Rns "$PACKAGENAME"
 [[ $1 == "-r" ]] && sudo pacman -Rns "$PACKAGENAME"
+[[ $1 == "--search" ]] && sudo pacman -Ss "$PACKAGENAME"
+[[ $1 == "-s" ]] && sudo pacman -Ss "$PACKAGENAME"
+[[ $1 == "--update" ]] && sudo pacman -Syu
+[[ $1 == "-u" ]] && sudo pacman -Syu
 
+if [[ $1 == "-aur" ]]; then
+    mkdir ~/.pachelpr-files
+    exec git clone https://aur.archlinux.org/$PACKAGENAME.git
+    if [[ $? != 0 ]]; then
+        echo "IT WORK"
+    fi
+fi
