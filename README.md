@@ -5,3 +5,11 @@ It is intended for use in Arch Linux or an Arch based distro (such as Manjaro).
 
 ![Installation](https://i.ibb.co/JzZY1dt/fc3355fe-32c8-4be2-8b4b-c552991950b3-200x200.png)
 
+1. Clone the repository using `git clone https://github.com/RealStoneSword/pachelpr.git`
+
+2. CD into the repository's folder using `cd pachelpr`
+
+3. Run `./install`
+
+4. Done! Run `pachelpr --help` for the usage
+
