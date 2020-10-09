@@ -1,12 +1,23 @@
 #! /usr/bin/bash
 
-PACKAGENAME="pachelpr"
+PACKAGENAME="$2"
 
-if [ "$1" == "--help" ] || [ "$1" == "-h" ]; then
-	printf "\nUsage:\n pachelpr [OPTIONS] [PACKAGE NAME]\n\n-i --install - Installs a program from the official repos\n-r --remove - Removes a program and its dependencies\n-a --aur - Downloads and Installs something from the AU\n"
-fi
+usage() {
+    cat << EOF
+Usage: pachelpr [OPTIONS] [PACKAGE_NAME]
 
-if [ "$#" == 1 ] && [ "$1" == "--install" ] || [ "$1" == "-i" ] || [ "$1" == "-r" ] || [ "$1" == "--remove" ] || [ "$1" == "-a" ] || [ "$1" == "--aur" ]; then
-	printf "Package name not supplied. Please try again."
-fi
+Options:
+    -i, --install   Install PACKAGE_NAME from the offical repos
+    -r, --remove    Remove PACKAGE_NAME and its dependencies
+    -s, --search    Searches the arch repos for a package
+    -a, --aur       Downloads and installs a package from the AUR.
+    -u, --update    Does a full system upgrade
+    --help          Display this help message
+EOF
+exit 0
+}
+
+[[ $1 == "--help" ]] && usage
+
+[[ "$1" == "--install" ]] && sudo pacman -S "$PACKAGENAME"
 
