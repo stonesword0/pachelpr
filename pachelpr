@@ -1,17 +1,19 @@
 #! /usr/bin/bash
 
 PACKAGENAME="$2"
+DIR=$(pwd)
 
 usage() {
     cat << EOF
 Usage: pachelpr [OPTIONS] [PACKAGE_NAME]
 
 Options:
-    -i, --install   Install PACKAGE_NAME from the offical repos
-    -r, --remove    Remove PACKAGE_NAME and its dependencies
+    -i, --install   Install a package from the offical repos
+    -r, --remove    Remove a package and its dependencies
     -s, --search    Searches the arch repos for a package
     -a, --aur       Downloads and installs a package from the AUR.
     -u, --update    Does a full system upgrade
+    -c, --clear     Clears pacman's cache
     --help          Display this help message
 EOF
 exit 0
@@ -21,17 +23,29 @@ exit 0
 
 [[ $1 == "--install" ]] && sudo pacman -S "$PACKAGENAME"
 [[ $1 == "-i" ]] && sudo pacman -S "$PACKAGENAME"
+
 [[ $1 == "--remove" ]] && sudo pacman -Rns "$PACKAGENAME"
 [[ $1 == "-r" ]] && sudo pacman -Rns "$PACKAGENAME"
+
 [[ $1 == "--search" ]] && sudo pacman -Ss "$PACKAGENAME"
 [[ $1 == "-s" ]] && sudo pacman -Ss "$PACKAGENAME"
+
 [[ $1 == "--update" ]] && sudo pacman -Syu
 [[ $1 == "-u" ]] && sudo pacman -Syu
 
-if [[ $1 == "-aur" ]]; then
+[[ $1 == "-c" ]] && sudo pacman -Sc
+[[ $1 == "--clear" ]] && sudo pacman -Sc
+
+if [[ $1 == "--aur" ]] || [[ $1 == -a ]]; then
     mkdir ~/.pachelpr-files
-    exec git clone https://aur.archlinux.org/$PACKAGENAME.git
-    if [[ $? != 0 ]]; then
-        echo "IT WORK"
-    fi
+    git clone https://aur.archlinux.org/$PACKAGENAME.git ~/.pachelpr-files/$PACKAGENAME
+    EXITCODE="$?"
+        if [[ $EXITCODE != 0 ]]; then
+            echo -e "Cloning from AUR failed. The package may be unavalible or you internet may not be working. Please try again."
+            exit 0
+        fi
+    cd ~/.pachelpr-files/$PACKAGENAME
+    makepkg -s -i -p ~/.pachelpr-files/$PACKAGENAME/PKGBUILD
+    rm -r -f ~/.pachelpr-files/$PACKAGENAME
+    cd $DIR
 fi
